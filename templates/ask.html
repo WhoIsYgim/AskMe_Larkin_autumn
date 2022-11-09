@@ -1,0 +1,35 @@
+{% extends 'inc/base.html' %}
+
+{% block content %}
+    <form>
+        <div class="form-group">
+            <p class="h1">Ask a question! </p>
+            <label for="quest-theme"><h3>Question header </h3></label>
+            <input type="text" class="form-control" id="quest-theme"
+                   placeholder="">
+            <small id="quest-header-help" class="form-text text-muted">Type briefly your question here.</small>
+        </div>
+        <div class="form-group">
+            <label for="quest-text" class="h4">Add a description to your question and write it in details.</label>
+            <textarea type="text" placeholder="Detailed description" class="form-control" id="quest-text"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="add-tags" class="h3"> Add some tags! </label>
+            <input type="text" class="form-control" id="quest-theme"
+                   placeholder="Tags">
+            <small id="quest-tags-help" class="form-text text-muted">Write tags related to your question to promote the
+                question in the search.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Ask!</button>
+    </form>
+{% endblock content %}
+
+{% block tags %}
+   <h2 class="mt-5">Popular Tags </h2>
+    <div class="tagcontainer">
+    {% for tag in tags %}
+        {% include "inc/single_tag.html" %}
+    {% endfor %}
+    </div>
+{% endblock tags %}

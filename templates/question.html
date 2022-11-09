@@ -1,0 +1,15 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+{% block content %}
+    <h2 class="mt-5">Question</h2>
+    {% include "inc/single_question.html" %}
+{% endblock content %}
+
+{% block tags %}
+   <h2 class="mt-5"> Tags </h2>
+    <div class="tagcontainer">
+    {% for tag in tags %}
+        {% include "inc/single_tag.html" %}
+    {% endfor %}
+    </div>
+{% endblock tags %}

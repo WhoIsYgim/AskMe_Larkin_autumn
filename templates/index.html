@@ -1,0 +1,34 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h2 class="header-green"> Questions </h2>
+    {% for question in questions %}
+        {% include "inc/single_question.html" %}
+    {% endfor %}
+
+    <nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1">Previous</a>
+    </li>
+    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+    <li class="page-item ">
+      <a class="page-link" href="#">2</a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav>
+{% endblock content %}
+
+{% block tags %}
+   <h2 class="header-green"> Tags </h2>
+    <div class="tagcontainer">
+    {% for tag in tags %}
+        {% include "inc/single_tag.html" %}
+    {% endfor %}
+    </div>
+{% endblock tags %}

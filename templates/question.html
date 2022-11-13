@@ -3,13 +3,32 @@
 {% block content %}
     <h2 class="mt-5">Question</h2>
     {% include "inc/single_question.html" %}
+
+
+    <h3 class="mt-5" id="answers_list"> Answers</h3>
+
+    {% for answer in question.answers %}
+        {% include "inc/single_answer.html" %}
+    {% endfor %}
+
+
+    <div class="form-group green-border-focus mt-5">
+        <label class="mb-2 answer_input_label" for="answer_input_form">Answer the question</label>
+        <textarea class="form-control mb-3" id="answer_input_form" rows="3"></textarea>
+        <button class="btn btn-outline-success mb-5" id="submit_answer_button">Answer</button>
+    </div>
+
 {% endblock content %}
 
+
 {% block tags %}
-   <h2 class="mt-5"> Tags </h2>
+    <h2 class="mt-5"> Tags </h2>
     <div class="tagcontainer">
-    {% for tag in tags %}
-        {% include "inc/single_tag.html" %}
-    {% endfor %}
+        {% for tag in tags %}
+            {% include "inc/single_tag.html" %}
+        {% endfor %}
+    </div>
+    <div>
+        <h2 class="mt-5"> Best Members </h2>
     </div>
 {% endblock tags %}

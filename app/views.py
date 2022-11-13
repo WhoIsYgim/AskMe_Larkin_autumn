@@ -1,10 +1,19 @@
 from django.shortcuts import render
 
+ANSWERS = [
+    {
+        "text": f"# {i} ANSWER text",
+        "a_num": i,
+        "is_true": True if i % 2 != 0 else False
+    } for i in range(1, 4)
+]
+
 QUESTIONS = [
     {
         "title": f"Question №{i}",
         "text": f"# {i} Question text",
-        "q_num": i
+        "q_num": i,
+        "answers": [ANSWERS[0], ANSWERS[1]]
     } for i in range(1, 4)
 ]
 
@@ -15,17 +24,34 @@ TAGS = [
     } for i in range(1, 10)
 ]
 
+
+def pagination():
+    return render()
+
+
+def profile():
+    return render()
+
+
 def index(request):
     return render(request, 'index.html', {"questions": QUESTIONS, "tags": TAGS})
+
 
 def ask(request):
     return render(request, 'ask.html', {"tags": TAGS})
 
+
 def question(request, i: int):
-    return render(request, 'question.html', {"question": QUESTIONS[i-1], "tags": TAGS})
+    return render(request, 'question.html', {"question": QUESTIONS[i - 1], "tags": TAGS})
+
+
+def answer(request, i: int, j: int):
+    return render(request, 'answer.html', {"question": QUESTIONS[i - 1], "answer": QUESTIONS[i - 1].answers[j]})
+
 
 def login(request):
     return render(request, 'login.html', {"tags": TAGS})
 
+
 def register(request):
-    return render(request,'regster.html', {"tags": TAGS})
+    return render(request, 'regster.html', {"tags": TAGS})

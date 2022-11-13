@@ -1,6 +1,11 @@
 {% load static %}
+{% if answer.is_true %}
+    <div class="solution">
+        <img src="{% static '/img/solution.png' %}" alt="">
+    </div>
+{% endif %}
 
-<div class="question">
+<div class="answer">
     <div class="row">
         <div class="col-2">
             <div class="avatar">
@@ -23,16 +28,7 @@
             </div>
         </div>
         <div class="col-10">
-            <h3><a href="{% url "single_q" question.q_num %}">{{ question.title }}</a></h3>
-            <p>{{ question.text }}</p>
-            <div class="row align-items-end question-meta">
-                <div class="col">
-                    <a href="{% url "single_q" question.q_num %}#answers_list"> Answers (228)</a>
-                </div>
-                <div class="col">
-                    Tags:
-                </div>
-            </div>
+            <p>{{ answer.text }}</p>
         </div>
     </div>
 </div>

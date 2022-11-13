@@ -25,10 +25,14 @@
 {% endblock content %}
 
 {% block tags %}
-   <h2 class="header-green"> Tags </h2>
+   <h2 class="header-green"> Popular Tags </h2>
     <div class="tagcontainer">
     {% for tag in tags %}
         {% include "inc/single_tag.html" %}
     {% endfor %}
+    </div>
+    <div>
+        <h2 class="header-green mt-5"> Best Members </h2>
+
     </div>
 {% endblock tags %}

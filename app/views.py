@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from app import models
+from django.core.paginator import Paginator
+
 
 ANSWERS = [
     {
@@ -14,7 +17,7 @@ QUESTIONS = [
         "text": f"# {i} Question text",
         "q_num": i,
         "answers": [ANSWERS[0], ANSWERS[1]]
-    } for i in range(1, 4)
+    } for i in range(1, 100)
 ]
 
 TAGS = [
@@ -32,16 +35,24 @@ USERS = [
     } for i in range(1, 10)
 ]
 
-def pagination():
-    return render()
+PAGINATION_SIZE = 10
+
+
+def pagination(objects, request):
+    paginator = Paginator(objects, PAGINATION_SIZE)
+    page = request.GET.get('page')
+    content = paginator.get_page(page)
+    return content
 
 
 def profile(request, i: int):
-    return render(request, 'profile.html', {"tags": TAGS, "questions": QUESTIONS, "user": USERS[i-1]})
+    user = models.Profile.objects.get_user_by_id(i)
+    return render(request, 'profile.html', {"tags": TAGS, "questions": QUESTIONS, "user": user})
 
 
 def index(request):
-    return render(request, 'index.html', {"questions": QUESTIONS, "tags": TAGS})
+    content = pagination(QUESTIONS, request)
+    return render(request, 'index.html', {"questions": content, "tags": TAGS})
 
 
 def ask(request):

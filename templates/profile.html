@@ -10,20 +10,20 @@
             </div>
             <div class="col-8 user_info">
                 <div class="profile_nickname">
-                    <h2 class="header-green">{{ user.nickname }}</h2>
+                    <h2 class="header-green">{{ user.user.username  }}</h2>
                 </div>
 
                 <div class="reg_date mt-4">
                     <span> Registration date: {{ user.reg_date }}</span>
                 </div>
                 <div class="answers_count mt-4">
-                    <span>Questions answered by {{ user.nickname }}:{{ user.answers }} </span>
+                    <span>Questions answered by {{ user.user.username }}:{{ user.answers }} </span>
                 </div>
             </div>
         </div>
     </div>
     <div class="mt-5">
-        <h2 class="header-green"> {{ user.nickname }}'s questions: </h2>
+        <h2 class="header-green"> {{ user.user.username  }}'s questions: </h2>
     </div>
 
     {% for question in questions %}

@@ -7,21 +7,21 @@ from django.contrib.auth.models import User
 
 class QuestionManager(models.Manager):
     def get_hot_questions(self):
-        return self.annotate(count=Count('like', distinct=True)).order_by('-count')
+        return self.annotate(count=Count('likeq', distinct=True)).order_by('-count')
 
     def get_recent_questions(self):
         return self.all().order_by('-date')
 
     def get_questions_for_tag(self, tag_id):
-        return self.filter(tag_id=tag_id)
+        return self.filter(tag__id=tag_id)
 
     def get_questions_for_user(self, user_id):
         return self.filter(author_id=user_id)
 
 
 class AnswerManager(models.Manager):
-    def get_answers_for_question(self, q_id):
-        return self.filter(question_id=q_id)
+    def get_answers_for_question(self, a_id):
+        return self.filter(answer_id=a_id)
 
 
 class TagManager(models.Manager):
@@ -46,7 +46,8 @@ class ProfileManager(models.Manager):
 
 class LikeQManager(models.Manager):
     def get_likes_count_for_question(self, q_id):
-        return self.count(quetion_id=q_id)
+        likes = self.filter(question_id=q_id)
+        return likes.count()
 
 
 class LikeAManager(models.Manager):

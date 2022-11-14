@@ -6,28 +6,17 @@
             <div class="avatar">
                 <img src="{% static '/img/avatar-2.png' %}" alt="">
             </div>
-            <div class="row counter">
-                <div class="col-3">
-                    <a href="#">
-                        <img src="{% static '/img/arrow-down.svg' %}" alt="">
-                    </a>
-                </div>
-                <div class="col-6">
-                    <span>100</span>
-                </div>
-                <div class="col-3">
-                    <a href="#">
-                        <img src="{% static '/img/arrow-up.svg' %}" alt="">
-                    </a>
-                </div>
+            <div class="counter">
+                <img src="{% static '/img/heart.svg' %}" alt="">
+                <span>{{ question.like_count }}</span>
             </div>
         </div>
         <div class="col-10">
-            <h3><a class="header-green" href="{% url "single_q" question.q_num %}">{{ question.title }}</a></h3>
+            <h3><a class="header-green" href="{% url "single_q" question.id %}">{{ question.title }}</a></h3>
             <p class="question_text">{{ question.text }}</p>
             <div class="row align-items-end question-meta">
                 <div class="col mb-5">
-                    <a href="{% url "single_q" question.q_num %}#answers_list"> Answers (228)</a>
+                    <a href="{% url "single_q" question.id%}#answers_list"> Answers (100)</a>
                 </div>
                 <div class="col mb-5">
                     <span class="header-green tags_title">Tags: </span>

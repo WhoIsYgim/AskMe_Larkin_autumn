@@ -32,7 +32,7 @@ body {
     padding: 10px;
 }
 
-.qw_pg_title{
+.qw_pg_title {
     color: green;
 }
 
@@ -50,7 +50,7 @@ body {
 }
 
 .solution img {
-     max-width: 100%;
+    max-width: 100%;
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -69,23 +69,35 @@ body {
     object-fit: cover;
 }
 
-.counter img {
-    width: 100%;
-}
-
 .counter {
-    padding-left: calc(var(--bs-gutter-x) * .5);
-    max-width: 100%;
+    width: 100px;
+    padding: 5px;
+    border: solid gray 2px;
+    border-radius: 4px;
+    height: 40px;
+    transition: 0.25s;
 }
 
-.counter .col-3 {
-    padding: 0;
+.counter:hover{
+    background-color: #f75252;
+    border: solid #f75252 1px;
 }
 
-.counter .col-6 {
-    text-align: center;
+.counter img{
+    height: 100%;
+    object-fit: fill;
+    margin-bottom: 10px;
 }
-.question_text{
+
+.counter span{
+    font-size: 20px;
+    margin-left: 10px;
+    position: relative;
+    top: -10%;
+
+}
+
+.question_text {
     max-height: 120px;
     overflow: hidden;
 }
@@ -112,9 +124,11 @@ body {
 .question-meta {
     height: 60px;
 }
+
 .answer_input_label {
     font-size: 28px;
 }
+
 .green-border-focus .form-control:focus {
     border: 1px solid #8bc34a;
     box-shadow: 0 0 0 0.2rem rgba(139, 195, 74, .25);
@@ -126,13 +140,13 @@ body {
     display: inline-flex;
 }
 
-.authorized a{
+.authorized a {
     text-decoration: none;
     color: white;
 }
 
 
-.authorized a:hover{
+.authorized a:hover {
     color: #badbcc;
 }
 
@@ -166,6 +180,9 @@ form > .form-group {
 #quest-text {
     margin-bottom: 10px;
 }
+.members{
+    margin-top:50%
+}
 
 .tag {
     background-color: white;
@@ -185,7 +202,7 @@ form > .form-group {
     color: black;
 }
 
-.tag:hover{
+.tag:hover {
     background-color: #d1e7dd;
 }
 
@@ -197,26 +214,26 @@ form > .form-group {
     max-width: 300px;
 }
 
-.profile_info{
+.profile_info {
     background-color: white;
     padding: 20px;
-    border: gray ;
+    border: gray;
 }
 
-.profile_avatar{
+.profile_avatar {
     height: 250px;
     width: 250px;
 }
 
-.profile_avatar img{
-     width: 100%;
-     object-fit: fill;
+.profile_avatar img {
+    width: 100%;
+    object-fit: fill;
 }
 
-.reg_date{
+.reg_date {
     font-size: 20px;
 }
 
-.answers_count{
+.answers_count {
     font-size: 20px;
 }

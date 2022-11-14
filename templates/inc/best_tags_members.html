@@ -1,0 +1,10 @@
+{% load static %}
+<h2 class="mt-5"> Tags </h2>
+    <div class="tagcontainer">
+        {% for tag in tags %}
+           {% include "inc/single_tag.html" %}
+        {% endfor %}
+    </div>
+    <div>
+        <h2 class="members"> Best Members </h2>
+    </div>

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from app import models
 from django.core.paginator import Paginator
+from django.db.models import Count
 
 
 ANSWERS = [
@@ -22,8 +23,8 @@ QUESTIONS = [
 
 TAGS = [
     {
-        "name": f"Tag#{i}",
-        "t_num": i
+        "title": f"Tag#{i}",
+        "id": i
     } for i in range(1, 10)
 ]
 
@@ -47,16 +48,21 @@ def pagination(objects, request):
 
 def profile(request, i: int):
     user = models.Profile.objects.get_user_by_id(i)
-    return render(request, 'profile.html', {"tags": TAGS, "questions": QUESTIONS, "user": user})
+    questions = models.Question.objects.get_questions_for_user(i)
+    questions = questions.annotate(like_count=models.Count('likeq'))
+    return render(request, 'profile.html', {"tags": TAGS, "questions": questions, "user": user})
 
 
 def index(request):
-    content = pagination(QUESTIONS, request)
+    questions = models.Question.objects.get_hot_questions()
+    questions = questions.annotate(like_count=models.Count('likeq'))
+    content = pagination(questions, request)
     return render(request, 'index.html', {"questions": content, "tags": TAGS})
 
 
 def ask(request):
-    return render(request, 'ask.html', {"tags": TAGS})
+    tags = models.Tag.objects.get_hot_tags()
+    return render(request, 'ask.html', {"tags": tags})
 
 
 def question(request, i: int):
@@ -67,8 +73,13 @@ def answer(request, i: int, j: int):
     return render(request, 'answer.html', {"question": QUESTIONS[i - 1], "answer": QUESTIONS[i - 1].answers[j]})
 
 
-def tag(request, title: str):
-    return render(request, 'questions_for_tag.html', {"tag": TAGS[int(title) - 1], "questions": QUESTIONS, "tags": TAGS})
+def tag(request, i: int):
+    tag = models.Tag.objects.get_tag_by_id(i)
+    tags = models.Tag.objects.get_hot_tags()
+    questions = models.Question.objects.get_questions_for_tag(i)
+    questions = questions.annotate(like_count=models.Count('likeq'))
+    content = pagination(questions, request)
+    return render(request, 'questions_for_tag.html', {"tag": tag, "questions": content, "tags": tags})
 
 
 def login(request):

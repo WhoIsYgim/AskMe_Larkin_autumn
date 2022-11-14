@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-    <h2 class="mt-5">Questions for tag {{ tag.name }}</h2>
+    <h2 class="mt-5">Questions for tag {{ tag.title }}</h2>
 
     {% for question in questions %}
         {% include "inc/single_question.html" %}
@@ -12,13 +12,5 @@
 {% endblock content %}
 
 {% block tags %}
-    <h2 class="mt-5"> Tags </h2>
-    <div class="tagcontainer">
-        {% for tag in tags %}
-           {% include "inc/single_tag.html" %}
-        {% endfor %}
-    </div>
-    <div>
-        <h2 class="mt-5"> Best Members </h2>
-    </div>
+   {% include 'inc/best_tags_members.html' %}
 {% endblock tags %}

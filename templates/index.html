@@ -7,29 +7,15 @@
         {% include "inc/single_question.html" %}
     {% endfor %}
 
-    <nav aria-label="...">
-  <ul class="pagination">
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1">Previous</a>
-    </li>
-    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-    <li class="page-item ">
-      <a class="page-link" href="#">2</a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Next</a>
-    </li>
-  </ul>
-</nav>
+    {% include 'inc/paginator.html' %}
 {% endblock content %}
 
 {% block tags %}
-   <h2 class="header-green"> Popular Tags </h2>
+    <h2 class="header-green"> Popular Tags </h2>
     <div class="tagcontainer">
-    {% for tag in tags %}
-        {% include "inc/single_tag.html" %}
-    {% endfor %}
+        {% for tag in tags %}
+            {% include "inc/single_tag.html" %}
+        {% endfor %}
     </div>
     <div>
         <h2 class="header-green mt-5"> Best Members </h2>

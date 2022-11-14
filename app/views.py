@@ -24,13 +24,20 @@ TAGS = [
     } for i in range(1, 10)
 ]
 
+USERS = [
+    {
+        "nickname": "user",
+        "answers": i,
+        "reg_date": f"01.01.201{i}"
+    } for i in range(1, 10)
+]
 
 def pagination():
     return render()
 
 
-def profile():
-    return render()
+def profile(request, i: int):
+    return render(request, 'profile.html', {"tags": TAGS, "questions": QUESTIONS, "user": USERS[i-1]})
 
 
 def index(request):
@@ -47,6 +54,10 @@ def question(request, i: int):
 
 def answer(request, i: int, j: int):
     return render(request, 'answer.html', {"question": QUESTIONS[i - 1], "answer": QUESTIONS[i - 1].answers[j]})
+
+
+def tag(request, title: str):
+    return render(request, 'questions_for_tag.html', {"tag": TAGS[int(title) - 1], "questions": QUESTIONS, "tags": TAGS})
 
 
 def login(request):

@@ -40,12 +40,12 @@
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Search</button>
                 </form>
-                <div class="authorized position-static">
+                <div class="authorized">
                     <div class="avatar-auth">
                         <img src="{% static '/img/avatar-2.png' %}" alt="">
                     </div>
                     <div class="username">
-                        <a href="#"> Username </a>
+                        <a href="{% url "profile" 1 %}"> Username </a>
                     </div>
                 </div>
             </div>

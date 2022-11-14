@@ -24,6 +24,18 @@ body {
     padding: 10px;
 }
 
+.question_pg {
+    background-color: white;
+    border: 2px solid gray;
+    border-radius: 4px;
+    margin: 15px;
+    padding: 10px;
+}
+
+.qw_pg_title{
+    color: green;
+}
+
 .answer {
     background-color: white;
     border: 2px solid gray;
@@ -73,6 +85,29 @@ body {
 .counter .col-6 {
     text-align: center;
 }
+.question_text{
+    max-height: 120px;
+    overflow: hidden;
+}
+
+.tag_in_question {
+    padding: 2px;
+    margin-right: 3px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    max-width: 10px;
+    border: #146c43 solid 2px;
+    border-radius: 3px;
+    text-decoration: none;
+    color: black;
+
+}
+
+.tag_in_question:hover {
+    background-color: #d1e7dd;
+    color: black;
+}
+
 
 .question-meta {
     height: 60px;
@@ -89,6 +124,16 @@ body {
     height: 80%;
     margin-left: 200px;
     display: inline-flex;
+}
+
+.authorized a{
+    text-decoration: none;
+    color: white;
+}
+
+
+.authorized a:hover{
+    color: #badbcc;
 }
 
 .avatar-auth {
@@ -132,6 +177,16 @@ form > .form-group {
     border: 2px solid black;
     border-radius: 3px;
     float: left;
+
+}
+
+.tag a {
+    text-decoration: none;
+    color: black;
+}
+
+.tag:hover{
+    background-color: #d1e7dd;
 }
 
 .sign-in {
@@ -140,4 +195,28 @@ form > .form-group {
 
 #customFile {
     max-width: 300px;
+}
+
+.profile_info{
+    background-color: white;
+    padding: 20px;
+    border: gray ;
+}
+
+.profile_avatar{
+    height: 250px;
+    width: 250px;
+}
+
+.profile_avatar img{
+     width: 100%;
+     object-fit: fill;
+}
+
+.reg_date{
+    font-size: 20px;
+}
+
+.answers_count{
+    font-size: 20px;
 }

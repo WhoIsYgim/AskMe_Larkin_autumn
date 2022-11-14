@@ -1,0 +1,24 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+{% block content %}
+
+    <h2 class="mt-5">Questions for tag {{ tag.name }}</h2>
+
+    {% for question in questions %}
+        {% include "inc/single_question.html" %}
+    {% endfor %}
+
+    {% include 'inc/paginator.html' %}
+{% endblock content %}
+
+{% block tags %}
+    <h2 class="mt-5"> Tags </h2>
+    <div class="tagcontainer">
+        {% for tag in tags %}
+           {% include "inc/single_tag.html" %}
+        {% endfor %}
+    </div>
+    <div>
+        <h2 class="mt-5"> Best Members </h2>
+    </div>
+{% endblock tags %}

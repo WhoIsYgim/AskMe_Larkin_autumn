@@ -1,0 +1,32 @@
+{% load static %}
+<div class="question_pg">
+    <div class="row">
+        <div class="col-2">
+            <div class="avatar">
+                <img src="{% static '/img/avatar-2.png' %}" alt="">
+            </div>
+            <div class="row counter">
+                <div class="col-3">
+                    <a href="#">
+                        <img src="{% static '/img/arrow-down.svg' %}" alt="">
+                    </a>
+                </div>
+                <div class="col-6">
+                    228
+                </div>
+                <div class="col-3">
+                    <a href="#">
+                        <img src="{% static '/img/arrow-up.svg' %}" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-10">
+            <h4 class="qw_pg_title">{{ question.title }}</h4>
+            <p>{{ question.text }}</p>
+        </div>
+    </div>
+</div>
+<div class="tags_pg">
+
+</div>

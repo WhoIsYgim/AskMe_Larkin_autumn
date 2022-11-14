@@ -1,2 +1,45 @@
 {% extends 'inc/base.html' %}
 {% load static %}
+{% block content %}
+    <div class="container profile_info mt-5">
+        <div class="row">
+            <div class="col-4 ">
+                <div class="profile_avatar">
+                    <img src="{% static '/img/avatar-2.png' %}" alt="">
+                </div>
+            </div>
+            <div class="col-8 user_info">
+                <div class="profile_nickname">
+                    <h2 class="header-green">{{ user.nickname }}</h2>
+                </div>
+
+                <div class="reg_date mt-4">
+                    <span> Registration date: {{ user.reg_date }}</span>
+                </div>
+                <div class="answers_count mt-4">
+                    <span>Questions answered by {{ user.nickname }}:{{ user.answers }} </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-5">
+        <h2 class="header-green"> {{ user.nickname }}'s questions: </h2>
+    </div>
+
+    {% for question in questions %}
+        {% include 'inc/single_question.html' %}
+    {% endfor %}
+
+{% endblock content %}
+
+{% block tags %}
+    <h2 class="mt-5"> Tags </h2>
+    <div class="tagcontainer">
+        {% for tag in tags %}
+            {% include "inc/single_tag.html" %}
+        {% endfor %}
+    </div>
+    <div class="mt-5">
+        <h2> Best Members </h2>
+    </div>
+{% endblock tags %}

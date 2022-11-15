@@ -12,24 +12,27 @@ class QuestionManager(models.Manager):
     def get_recent_questions(self):
         return self.all().order_by('-date')
 
-    def get_questions_for_tag(self, tag_id):
-        return self.filter(tag__id=tag_id)
+    def get_questions_for_tag(self, title):
+        return self.filter(tags__title=title)
 
     def get_questions_for_user(self, user_id):
         return self.filter(author_id=user_id)
 
 
 class AnswerManager(models.Manager):
-    def get_answers_for_question(self, a_id):
-        return self.filter(answer_id=a_id)
+    def get_answers_for_question(self, q_id):
+        return self.filter(question_id=q_id)
 
 
 class TagManager(models.Manager):
     def get_tag_by_id(self, tag_id):
         return self.filter(id=tag_id)
 
+    def get_tag_by_title(self, title):
+        return self.get(title=title)
+
     def get_hot_tags(self):
-        return self.all().annotate(count=Count('question')).order_by('-count')[:9]
+        return self.all().annotate(count=Count('questions')).order_by('-count')[:9]
 
     def get_question_tags(self, q_id):
         return self.filter(question__id=q_id)
@@ -38,7 +41,7 @@ class TagManager(models.Manager):
 class ProfileManager(models.Manager):
     def get_top_users(self):
         return self.all().annotate(rating=0.3 * Count('answer') + Count(
-            Case(When(answer__correct=True, then=1))) + 0.1 * Count('question')).order_by('-rating')[:10]
+            Case(When(answer__solution=True))) + 0.1 * Count('question')).order_by('-rating')[:10]
 
     def get_user_by_id(self, u_id):
         return self.get(id=u_id)
@@ -62,12 +65,17 @@ class Profile(models.Model):
     objects = ProfileManager()
 
     user = models.OneToOneField(User, null=True, related_name='profile_related', on_delete=models.CASCADE)
-    avatar = models.ImageField(null=True, blank=True, default='default.png', upload_to='avatar/%y/%m/%d')
+    avatar = models.ImageField(null=True, blank=True, default='default.png', upload_to='uploads/avatars/%y/%m/%d')
     reg_date = models.DateField(auto_now=True)
-    answers = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.user.username
+
+    def get_username(self):
+        return self.user.username
+
+    def answers(self):
+        return Answer.objects.filter(author_id=self.id).count()
 
 
 class Tag(models.Model):
@@ -83,13 +91,22 @@ class Question(models.Model):
     objects = QuestionManager()
 
     author = models.ForeignKey(Profile, null=False, on_delete=models.CASCADE)
-    tag = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, blank=True, related_name='questions')
     date = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=30)
     text = models.TextField()
 
-    def get_likes(self):
-        return self.objects.filter(like__id=self.id)
+    def get_username(self):
+        return self.author.user.username
+
+    def get_like_count(self):
+        return LikeQ.objects.filter(question_id=self.id).count()
+
+    def get_answer_count(self):
+        return Answer.objects.filter(question_id=self.id).count()
+
+    def get_tags(self):
+        return self.tags.all()
 
     def __str__(self):
         return self.title
@@ -103,6 +120,12 @@ class Answer(models.Model):
     date = models.DateTimeField(auto_now=True)
     text = models.TextField()
     solution = models.BooleanField(default=False)
+
+    def get_username(self):
+        return self.author.user.username
+
+    def get_like_count(self):
+        return LikeA.objects.filter(answer_id=self.id).count()
 
     def __str__(self):
         return f"{self.question.title}_answer"

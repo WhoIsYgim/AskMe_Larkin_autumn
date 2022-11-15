@@ -5,11 +5,9 @@
 
     {% include 'inc/question_pg.html' %}
 
-
-
     <h3 class="mt-5" id="answers_list"> Answers</h3>
 
-    {% for answer in question.answers %}
+    {% for answer in content %}
         {% include "inc/single_answer.html" %}
     {% endfor %}
 
@@ -23,6 +21,3 @@
 {% endblock content %}
 
 
-{% block tags %}
-    {% include 'inc/best_tags_members.html' %}
-{% endblock tags %}

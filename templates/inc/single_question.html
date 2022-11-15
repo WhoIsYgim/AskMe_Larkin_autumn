@@ -8,7 +8,7 @@
             </div>
             <div class="counter">
                 <img src="{% static '/img/heart.svg' %}" alt="">
-                <span>{{ question.like_count }}</span>
+                <span>{{ question.get_like_count }}</span>
             </div>
         </div>
         <div class="col-10">
@@ -16,18 +16,27 @@
             <p class="question_text">{{ question.text }}</p>
             <div class="row align-items-end question-meta">
                 <div class="col mb-5">
-                    <a href="{% url "single_q" question.id%}#answers_list"> Answers (100)</a>
+                    <a href="{% url "single_q" question.id %}#answers_list"> Answers ({{ question.get_answer_count }})</a>
                 </div>
                 <div class="col mb-5">
                     <span class="header-green tags_title">Tags: </span>
                     <div>
-                        <a class="tag_in_question">Tag#1</a>
-                        <a class="tag_in_question">Tag#1</a>
-                        <a class="tag_in_question">Tag#1</a>
+                        {% for tag in question.get_tags %}
+                        <a class="tag_in_question" href="{% url "single_tag" tag.title %}">{{ tag.title }}</a>
+                        {% endfor %}
                     </div>
 
                 </div>
             </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-6 ">
+            <h6><a class="name_by_question" href="{% url "profile" question.author.id%}"> Question by: {{ question.get_username }}</a></h6>
+        </div>
+        <div class="col-6">
+            <h6 class="pub_date">Publication date: {{ question.date }}</h6>
         </div>
     </div>
 </div>

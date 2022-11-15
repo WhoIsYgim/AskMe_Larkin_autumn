@@ -2,10 +2,11 @@
 {% load static %}
 
 {% block content %}
-    <h2 class="header-green"> Hot Questions </h2>
+    <h2 class="header-green"> Recent Questions </h2>
+
     {% for question in content %}
         {% include "inc/single_question.html" %}
     {% endfor %}
-     <h4 class="header-green hot_recent_link"><a href="{% url 'recent' %}">See recent questions!</a></h4>
+    <h4 class="header-green hot_recent_link"><a href="{% url 'hot' %}">See popular questions!</a></h4>
     {% include 'inc/paginator.html' %}
 {% endblock content %}

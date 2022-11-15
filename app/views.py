@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from app import models
 from django.core.paginator import Paginator
-from django.db.models import Count
+from django.db.models import Count, Subquery
 
 
 ANSWERS = [
@@ -41,50 +41,60 @@ PAGINATION_SIZE = 10
 
 def pagination(objects, request):
     paginator = Paginator(objects, PAGINATION_SIZE)
-    page = request.GET.get('page')
-    content = paginator.get_page(page)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    return page
+
+
+def create_content_right():
+    content = {
+               "tags": models.Tag.objects.get_hot_tags(),
+               "users": models.Profile.objects.get_top_users()
+               }
     return content
 
 
-def profile(request, i: int):
-    user = models.Profile.objects.get_user_by_id(i)
-    questions = models.Question.objects.get_questions_for_user(i)
-    questions = questions.annotate(like_count=models.Count('likeq'))
-    return render(request, 'profile.html', {"tags": TAGS, "questions": questions, "user": user})
+def create_content(objects, request):
+    page = pagination(objects, request)
+    content = create_content_right()
+    content["content"] = page
+    return content
 
 
 def index(request):
-    questions = models.Question.objects.get_hot_questions()
-    questions = questions.annotate(like_count=models.Count('likeq'))
-    content = pagination(questions, request)
-    return render(request, 'index.html', {"questions": content, "tags": TAGS})
+    return render(request, 'index.html', create_content(models.Question.objects.get_hot_questions(), request))
 
 
-def ask(request):
-    tags = models.Tag.objects.get_hot_tags()
-    return render(request, 'ask.html', {"tags": tags})
+def recent(request):
+    return render(request, 'questions_recent.html', create_content(models.Question.
+                                                                   objects.get_recent_questions(), request))
 
 
 def question(request, i: int):
-    return render(request, 'question.html', {"question": QUESTIONS[i - 1], "tags": TAGS})
+    content = create_content(models.Answer.objects.get_answers_for_question(i), request)
+    content["question"] = models.Question.objects.get(id=i)
+    return render(request, 'question.html', content)
 
 
-def answer(request, i: int, j: int):
-    return render(request, 'answer.html', {"question": QUESTIONS[i - 1], "answer": QUESTIONS[i - 1].answers[j]})
+def tag(request, title: str):
+    content = create_content(models.Question.objects.get_questions_for_tag(title), request)
+    content["tag"] = models.Tag.objects.get_tag_by_title(title)
+    return render(request, 'questions_for_tag.html', content)
 
 
-def tag(request, i: int):
-    tag = models.Tag.objects.get_tag_by_id(i)
-    tags = models.Tag.objects.get_hot_tags()
-    questions = models.Question.objects.get_questions_for_tag(i)
-    questions = questions.annotate(like_count=models.Count('likeq'))
-    content = pagination(questions, request)
-    return render(request, 'questions_for_tag.html', {"tag": tag, "questions": content, "tags": tags})
+def profile(request, i: int):
+    content = create_content(models.Question.objects.get_questions_for_user(i), request)
+    content["user"] = models.Profile.objects.get_user_by_id(i)
+    return render(request, 'profile.html', content)
+
+
+def ask(request):
+    return render(request, 'ask.html', create_content_right())
 
 
 def login(request):
-    return render(request, 'login.html', {"tags": TAGS})
+    return render(request, 'login.html', create_content_right())
 
 
 def register(request):
-    return render(request, 'regster.html', {"tags": TAGS})
+    return render(request, 'register.html', create_content_right())

@@ -3,12 +3,13 @@ from app import views
 
 urlpatterns = [
     path('', views.index, name="index"),
+    path('questions/', views.index, name='questions'),
+    path('questions/hot/', views.index, name='hot'),
+    path('questions/recent/', views.recent, name='recent'),
+    path('questions/<int:i>/', views.question, name="single_q"),
     path('ask/', views.ask, name="askform"),
     path('login/', views.login, name="login_page"),
     path('register/', views.register, name="register"),
-    path('questions/<int:i>/', views.question, name="single_q"),
-    path('questions/<int:i>/answer/<int:j>', views.answer, name="single_ans"),
-    path('tag/<int:i>/', views.tag, name="single_tag"),
-
+    path('tag/<str:title>/', views.tag, name="single_tag"),
     path('profile/<int:i>/', views.profile, name="profile"),
 ]

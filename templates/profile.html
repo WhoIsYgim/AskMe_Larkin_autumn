@@ -17,7 +17,7 @@
                     <span> Registration date: {{ user.reg_date }}</span>
                 </div>
                 <div class="answers_count mt-4">
-                    <span>Questions answered by {{ user.user.username }}:{{ user.answers }} </span>
+                    <span>Questions answered by {{ user.user.username }}: {{ user.answers }} </span>
                 </div>
             </div>
         </div>
@@ -26,12 +26,10 @@
         <h2 class="header-green"> {{ user.user.username  }}'s questions: </h2>
     </div>
 
-    {% for question in questions %}
+    {% for question in content %}
         {% include 'inc/single_question.html' %}
     {% endfor %}
 
-{% endblock content %}
+    {% include 'inc/paginator.html' %}
 
-{% block tags %}
-    {% include 'inc/best_tags_members.html' %}
-{% endblock tags %}
+{% endblock content %}

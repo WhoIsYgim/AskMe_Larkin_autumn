@@ -5,9 +5,9 @@
             <div class="avatar">
                 <img src="{% static '/img/avatar-2.png' %}" alt="">
             </div>
-             <div class="counter">
+            <div class="counter">
                 <img src="{% static '/img/heart.svg' %}" alt="">
-                <span>100</span>
+                <span>{{ question.get_like_count }}</span>
             </div>
         </div>
         <div class="col-10">
@@ -15,7 +15,20 @@
             <p>{{ question.text }}</p>
         </div>
     </div>
-</div>
-<div class="tags_pg">
 
+</div>
+<div class="row">
+    <div class="col-4">
+        <h4><a class="name_by_question" href="{% url "profile" question.author.id %}"> Question
+            by: {{ question.get_username }}</a></h4>
+    </div>
+    <div class="col-4">
+    <span class="header-green" style="font-size: 20px">Tags: </span>
+        {% for tag in question.get_tags %}
+            <a class="tag_in_question" href="{% url "single_tag" tag.title %}">{{ tag.title }}</a>
+        {% endfor %}
+    </div>
+    <div class="col-4">
+        <h6 class="pub_date">Publication date: {{ question.date }}</h6>
+    </div>
 </div>

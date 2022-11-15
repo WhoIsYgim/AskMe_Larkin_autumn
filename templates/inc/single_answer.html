@@ -1,5 +1,5 @@
 {% load static %}
-{% if answer.is_true %}
+{% if answer.solution%}
     <div class="solution">
         <img src="{% static '/img/solution.png' %}" alt="">
     </div>
@@ -13,11 +13,20 @@
             </div>
              <div class="counter">
                 <img src="{% static '/img/heart.svg' %}" alt="">
-                <span>100</span>
+                <span>{{ answer.get_like_count }}</span>
             </div>
         </div>
         <div class="col-10">
             <p>{{ answer.text }}</p>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-6 ">
+            <h6><a class="name_by_question" href="{% url "profile" answer.author.id%}"> Answer by: {{ answer.get_username }}</a></h6>
+        </div>
+        <div class="col-6">
+            <h6 class="pub_date">Publication date: {{ question.date }}</h6>
         </div>
     </div>
 </div>

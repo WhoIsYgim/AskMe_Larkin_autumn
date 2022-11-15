@@ -2,25 +2,25 @@
 <footer class="mt-auto py-3">
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            {% if questions.has_previous %}
+            {% if content.has_previous %}
                 <li class="page-item">
-                    <a class="page-link disabled" href="?page={{ questions.previous_page_number }}">Previous</a>
+                    <a class="page-link disabled" href="?page={{ content.previous_page_number }}">Previous</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link disabled" href="?page={{ questions.previous_page_number }}">{{ questions.previous_page_number }}</a>
+                    <a class="page-link disabled" href="?page={{ content.previous_page_number }}">{{ questions.previous_page_number }}</a>
                 </li>
             {% endif %}
 
             <li class="page-item active">
-                <a class="page-link " href="#"> {{ questions.number }}</a>
+                <a class="page-link " href="#"> {{ content.number }}</a>
             </li>
 
-            {% if questions.has_next %}
+            {% if content.has_next %}
                 <li class="page-item">
-                    <a class="page-link disabled" href="?page={{ questions.next_page_number }}">{{ questions.next_page_number }}</a>
+                    <a class="page-link disabled" href="?page={{ content.next_page_number }}">{{ questions.next_page_number }}</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link disabled" href="?page={{ questions.next_page_number }}">Next</a>
+                    <a class="page-link disabled" href="?page={{ content.next_page_number }}">Next</a>
                 </li>
             {% endif %}
         </ul>

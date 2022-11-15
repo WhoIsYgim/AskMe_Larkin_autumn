@@ -4,13 +4,11 @@
 
     <h2 class="mt-5">Questions for tag {{ tag.title }}</h2>
 
-    {% for question in questions %}
+    {% for question in content %}
         {% include "inc/single_question.html" %}
     {% endfor %}
 
     {% include 'inc/paginator.html' %}
 {% endblock content %}
 
-{% block tags %}
-   {% include 'inc/best_tags_members.html' %}
-{% endblock tags %}
+

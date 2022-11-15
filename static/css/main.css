@@ -98,7 +98,8 @@ body {
 }
 
 .question_text {
-    max-height: 120px;
+    max-height: 190px;
+    min-height: 10px;
     overflow: hidden;
 }
 
@@ -112,6 +113,7 @@ body {
     border-radius: 3px;
     text-decoration: none;
     color: black;
+    transition: 0.2s;
 
 }
 
@@ -120,6 +122,19 @@ body {
     color: black;
 }
 
+.name_by_question{
+    text-decoration: none;
+    color: gray;
+    transition: 0.2s;
+}
+
+.name_by_question:hover{
+    color: green;
+}
+
+.pub_date{
+    color: gray;
+}
 
 .question-meta {
     height: 60px;
@@ -194,7 +209,7 @@ form > .form-group {
     border: 2px solid black;
     border-radius: 3px;
     float: left;
-
+    transition: 0.2s;
 }
 
 .tag a {
@@ -236,4 +251,35 @@ form > .form-group {
 
 .answers_count {
     font-size: 20px;
+}
+
+.members_list li::marker{
+    content: "\2605";
+    size: 10px;
+    margin-right: 5px;
+}
+
+.members_list_item{
+    text-decoration: none;
+    font-size: 25px;
+    color: #157347;
+}
+
+.members_list li > a:hover{
+    color: #0c4128;
+}
+
+.hot_recent_link{
+    margin-left: 20px;
+}
+
+.hot_recent_link a{
+    text-decoration: none;
+    color: green;
+    transition: 0.2s;
+}
+
+
+.hot_recent_link a:hover{
+   color: #0c4128;
 }

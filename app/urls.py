@@ -1,6 +1,7 @@
 from django.urls import path
 from app import views
 
+
 urlpatterns = [
     path('', views.index, name="index"),
     path('questions/', views.index, name='questions'),
@@ -13,3 +14,4 @@ urlpatterns = [
     path('tag/<str:title>/', views.tag, name="single_tag"),
     path('profile/<int:i>/', views.profile, name="profile"),
 ]
+

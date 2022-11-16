@@ -7,7 +7,7 @@
                     <a class="page-link disabled" href="?page={{ content.previous_page_number }}">Previous</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link disabled" href="?page={{ content.previous_page_number }}">{{ questions.previous_page_number }}</a>
+                    <a class="page-link disabled" href="?page={{ content.previous_page_number }}">{{ content.previous_page_number }}</a>
                 </li>
             {% endif %}
 
@@ -17,7 +17,7 @@
 
             {% if content.has_next %}
                 <li class="page-item">
-                    <a class="page-link disabled" href="?page={{ content.next_page_number }}">{{ questions.next_page_number }}</a>
+                    <a class="page-link disabled" href="?page={{ content.next_page_number }}">{{ content.next_page_number }}</a>
                 </li>
                 <li class="page-item">
                     <a class="page-link disabled" href="?page={{ content.next_page_number }}">Next</a>

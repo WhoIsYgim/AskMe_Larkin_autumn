@@ -65,7 +65,7 @@ class Profile(models.Model):
     objects = ProfileManager()
 
     user = models.OneToOneField(User, null=True, related_name='profile_related', on_delete=models.CASCADE)
-    avatar = models.ImageField(null=True, blank=True, default='default.png', upload_to='uploads/avatars/%y/%m/%d')
+    avatar = models.ImageField(null=True, blank=True, upload_to='profiles/avatars/')
     reg_date = models.DateField(auto_now=True)
 
     def __str__(self):
@@ -96,6 +96,9 @@ class Question(models.Model):
     title = models.CharField(max_length=30)
     text = models.TextField()
 
+    def get_author(self):
+        return self.author
+
     def get_username(self):
         return self.author.user.username
 
@@ -120,6 +123,9 @@ class Answer(models.Model):
     date = models.DateTimeField(auto_now=True)
     text = models.TextField()
     solution = models.BooleanField(default=False)
+
+    def get_author(self):
+        return self.author
 
     def get_username(self):
         return self.author.user.username

@@ -1,38 +1,31 @@
 {% extends 'inc/base.html' %}
 {% load static %}
+{% load bootstrap5 %}
+
 
 {% block content %}
-<div class="card sign-in">
-    <article class="card-body">
-
-        <h4 class="card-title mb-4 mt-1">Sign in</h4>
-        <form>
-            <div class="form-group">
-                <label>Your email</label>
-                <input name="" class="form-control" placeholder="Email" type="email">
-
-                <div class="alert-danger mt-2">There's no an account with this email address!</div>
-            </div> <!-- form-group// -->
-            <div class="form-group">
-                <a class="float-right" href="#">Forgot?</a>
-                <label>Your password</label>
-                <input class="form-control" placeholder="******" type="password">
-                <div class="alert-danger mt-2">Incorrect password!</div>
-            </div> <!-- form-group// -->
-            <div class="form-group">
-                <div class="checkbox">
-                    <label> <input type="checkbox"> Save password </label>
-                </div> <!-- checkbox .// -->
-            </div> <!-- form-group// -->
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block"> Login</button>
-            </div> <!-- form-group// -->
-            <div>
-            <div class="mt-5">Don't have an account?</div>
-            <div ><a href="{% url "register" %}" >Register</a></div>
-        </div>
-        </form>
-    </article>
-</div>
+    <div class="card sign-in">
+        <article class="card-body">
+            <h4 class="card-title mb-4 mt-1">Sign in</h4>
+            <form action="/login/" method="post">
+                <div class="form-group">
+                    {% bootstrap_form form %}
+                    <label for="username">Your username</label>
+                    <input name="username" class="form-control" placeholder="Username" type="text">
+                </div>
+                <div class="form-group">
+                    <label>Your password</label>
+                    <input class="form-control" placeholder="******" type="password">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Login</button>
+                </div>
+                <div>
+                    <div class="mt-5">Don't have an account?</div>
+                    <div><a href="{% url "register" %}">Register</a></div>
+                </div>
+            </form>
+        </article>
+    </div>
 {% endblock content %}
 

@@ -137,6 +137,7 @@ class Answer(models.Model):
         return f"{self.question.title}_answer"
 
 
+#TODO unique together
 class LikeQ(models.Model):
     objects = LikeQManager()
 

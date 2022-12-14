@@ -1,40 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.contrib.auth import authenticate
+from django.contrib import auth
 from app import models
 from django.core.paginator import Paginator
 from django.db.models import Count, Subquery
 
-
-ANSWERS = [
-    {
-        "text": f"# {i} ANSWER text",
-        "a_num": i,
-        "is_true": True if i % 2 != 0 else False
-    } for i in range(1, 4)
-]
-
-QUESTIONS = [
-    {
-        "title": f"Question №{i}",
-        "text": f"# {i} Question text",
-        "q_num": i,
-        "answers": [ANSWERS[0], ANSWERS[1]]
-    } for i in range(1, 100)
-]
-
-TAGS = [
-    {
-        "title": f"Tag#{i}",
-        "id": i
-    } for i in range(1, 10)
-]
-
-USERS = [
-    {
-        "nickname": "user",
-        "answers": i,
-        "reg_date": f"01.01.201{i}"
-    } for i in range(1, 10)
-]
+from .forms import LoginForm
 
 PAGINATION_SIZE = 10
 
@@ -93,7 +65,22 @@ def ask(request):
 
 
 def login(request):
-    return render(request, 'login.html', create_content_right())
+    user_form = "dummy"
+    if request.method == 'POST':
+        user_form = LoginForm(data=request.POST)
+        if user_form.is_valid():
+            user = authenticate(request, **user_form.cleaned_data)
+            if user:
+                auth.login(request, user)
+                return redirect(reverse('index'))
+            else:
+                user_form.add_error(field=None, error="Wrong Login/Password")
+    elif request.method == 'GET':
+        user_from = LoginForm()
+
+    content = create_content_right()
+    content["form"] = user_form
+    return render(request, 'login.html', content)
 
 
 def register(request):

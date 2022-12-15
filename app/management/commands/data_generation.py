@@ -62,6 +62,7 @@ class Command(BaseCommand):
     def tags_gen(self, count, offset):
         self.stdout.write("tags generating...\n")
         tags = []
+
         for i in range(count):
             tag = Tag(title=f'tag#{i + offset}')
             tags.append(tag)
@@ -71,6 +72,7 @@ class Command(BaseCommand):
         self.stdout.write("questions_generating...\n")
         questions = []
         for i in range(10 * ratio):
+
             author = random.choice(profiles)
             question = Question()
             question.title = f'Question#{i + 10 * offset}'
@@ -83,6 +85,7 @@ class Command(BaseCommand):
         self.stdout.write("answers generating...\n")
         answers = []
         for i in range(100 * ratio):
+
             answer = Answer()
             answer.author = random.choice(profiles)
             answer.question = random.choice(questions)

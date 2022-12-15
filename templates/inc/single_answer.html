@@ -27,7 +27,7 @@
     <hr>
     <div class="row">
         <div class="col-6 ">
-            <h6><a class="name_by_question" href="{% url "profile" answer.author.id %}"> Answer
+            <h6><a class="name_by_question" href="{% url "profile" answer.author.user.id %}"> Answer
                 by: {{ answer.get_username }}</a></h6>
         </div>
         <div class="col-6">

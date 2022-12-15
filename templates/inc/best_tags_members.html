@@ -9,7 +9,7 @@
         <h2 class="members"> Best Members </h2>
         <ul class="members_list">
         {% for user in users %}
-            <li><a class="members_list_item" href="{% url "profile" user.id %}"> {{user.get_username}}</a></li>
+            <li><a class="members_list_item" href="{% url "profile" user.user.id %}"> {{user.user.username}}</a></li>
         {% endfor %}
         </ul>
     </div>

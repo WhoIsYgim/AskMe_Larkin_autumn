@@ -28,28 +28,40 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url "askform" %}">Ask a question!</a>
                     </li>
-                    <li class="nav-item">
+                    {% if not request.user.is_authenticated %}
+                         <li class="nav-item">
                         <a class="nav-link" href="{% url "login_page" %}">Sign in</a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url "register" %}" class="nav-link">Register</a>
                     </li>
+                    {% endif %}
+
                 </ul>
                 <form class="d-flex" style="margin-left: 250px;">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Search</button>
                 </form>
+                {% if request.user.is_authenticated %}
                 <div class="authorized">
                     <div class="avatar-auth">
-                        <img src="{% static '/img/avatar-2.png' %}" alt="">
+                        {% if request.user.profile.avatar %}
+                             <img src="{{ request.user.profile.avatar.url }}" alt="">
+                        {% else %}
+                            <img src="{% static '/img/default.png' %}" alt="">
+                        {% endif %}
                     </div>
                     <div class="username">
-                        <div class="">
-                            <a href="{% url "profile" 1 %}"> Username </a>
+                        <div class="nav-link ">
+                            <a href="{% url "profile" request.user.id %}" style="font-size: 20px"> Username </a>
                         </div>
-                         <a href="{% url "login_page"  %}"> Log out </a>
+                        <div class="nav-link">
+                             <a href="{% url "logout"  %} "> Log out </a>
+                        </div>
+
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </nav>

@@ -245,8 +245,14 @@ form > .form-group {
     object-fit: fill;
 }
 
+.profile_bio{
+    background-color: linen;
+    font-size: 15px;
+    font-style: italic;
+}
+
 .reg_date {
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .answers_count {
@@ -282,4 +288,18 @@ form > .form-group {
 
 .hot_recent_link a:hover{
    color: #0c4128;
+}
+
+.not_found_code{
+    font-size: 100px;
+    color: #0c4128;
+}
+
+.not_found_msg{
+    text-decoration: none;
+    color: #0c4128;
+}
+
+.not_found{
+    margin-top: 250px;
 }

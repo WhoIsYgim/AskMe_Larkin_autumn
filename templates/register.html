@@ -1,32 +1,16 @@
 {% extends 'inc/base.html' %}
 {% block content %}
-
+{% load bootstrap5 %}
     <div class="card sign-in">
         <article class="card-body">
 
             <h4 class="card-title mb-4 mt-1">Registration</h4>
             <small class="form-text text-muted">Quick registration will allow you to ask questions and answer other users</small>
-            <form>
+            <form action="/register/" method="post">
                 <div class="form-group">
-                    <label>Nickname</label>
-                    <input name="" class="form-control" placeholder="Write your nickname here" type="email">
+                    {% csrf_token %}
+                   {% bootstrap_form form %}
                 </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input name="" class="form-control" placeholder="Email" type="email">
-                    <div class="alert-danger mt-2">Incorrect email!</div>
-                </div> <!-- form-group// -->
-                <div class="form-group">
-                    <a class="float-right" href="#">Forgot?</a>
-                    <label>Password</label>
-                    <input class="form-control" placeholder="******" type="password">
-                    <div class="alert-danger mt-2">Password must contain at least 8 symbols!</div>
-                </div> <!-- form-group// -->
-                <div class="form-group">
-                    <label class="form-label" for="customFile">Upload an avatar!</label>
-                    <input type="file" class="form-control" id="customFile"/>
-                </div>
-
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block"> Register</button>
                 </div> <!-- form-group// -->

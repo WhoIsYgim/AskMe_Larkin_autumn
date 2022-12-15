@@ -11,18 +11,39 @@
                         <img src="{% static 'img/default.png' %}" alt="">
                     {% endif %}
                 </div>
+            <div class="reg_date mt-4">
+                    <span> Signed in: {{ user.user.date_joined | date:"M d, Y" }}</span>
+                </div>
             </div>
             <div class="col-8 user_info">
                 <div class="profile_nickname">
                     <h2 class="header-green">{{ user.user.username  }}</h2>
                 </div>
+                {% if user.bio %}
+                    <div class="profile_bio">
+                        <p > {{  user.bio}} </p>
+                    </div>
 
-                <div class="reg_date mt-4">
-                    <span> Registration date: {{ user.reg_date }}</span>
+                {% endif %}
+                {% if user.user.first_name %}
+                <div class="mt-4">
+                    <span>First name: {{ user.user.first_name }}</span>
                 </div>
+                {% endif %}
+
+                {% if user.user.last_name %}
+                     <div class="mt-4">
+                    <span>Last name: {{ user.user.last_name }}</span>
+                </div>
+                {% endif %}
+
+
                 <div class="answers_count mt-4">
                     <span>Questions answered by {{ user.user.username }}: {{ user.answers }} </span>
                 </div>
+                {% if request.user.is_authenticated and user.user.id == request.user.id %}
+                <a class="btn btn-outline-dark mt-4" href="{% url "profile_edit" %}">Edit Profile</a>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -16,7 +16,7 @@ class QuestionManager(models.Manager):
         return self.filter(tags__title=title)
 
     def get_questions_for_user(self, user_id):
-        return self.filter(author_id=user_id)
+        return self.filter(author__user_id=user_id)
 
 
 class AnswerManager(models.Manager):
@@ -40,11 +40,10 @@ class TagManager(models.Manager):
 
 class ProfileManager(models.Manager):
     def get_top_users(self):
-        return self.all().annotate(rating=0.3 * Count('answer') + Count(
-            Case(When(answer__solution=True))) + 0.1 * Count('question')).order_by('-rating')[:10]
+        return self.all().annotate(rating=0.3 * Count('answer') + 0.1 * Count('question')).order_by('-rating')[:10]
 
     def get_user_by_id(self, u_id):
-        return self.get(id=u_id)
+        return self.get(user_id=u_id)
 
 
 class LikeQManager(models.Manager):
@@ -66,7 +65,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, null=True, related_name='profile_related', on_delete=models.CASCADE)
     avatar = models.ImageField(null=True, blank=True, upload_to='profiles/avatars/')
-    reg_date = models.DateField(auto_now=True)
+    bio = models.TextField(null=True, blank=True, max_length=100)
 
     def __str__(self):
         return self.user.username
@@ -93,8 +92,8 @@ class Question(models.Model):
     author = models.ForeignKey(Profile, null=False, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, blank=True, related_name='questions')
     date = models.DateTimeField(auto_now=True)
-    title = models.CharField(max_length=30)
-    text = models.TextField()
+    title = models.CharField(max_length=100)
+    text = models.TextField(max_length=500)
 
     def get_author(self):
         return self.author
@@ -137,7 +136,7 @@ class Answer(models.Model):
         return f"{self.question.title}_answer"
 
 
-#TODO unique together
+# TODO unique together
 class LikeQ(models.Model):
     objects = LikeQManager()
 
@@ -150,3 +149,4 @@ class LikeA(models.Model):
 
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+

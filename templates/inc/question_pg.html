@@ -23,7 +23,7 @@
 </div>
 <div class="row">
     <div class="col-4">
-        <h4><a class="name_by_question" href="{% url "profile" question.author.id %}"> Question
+        <h4><a class="name_by_question" href="{% url "profile" question.author.user.id %}"> Question
             by: {{ question.get_username }}</a></h4>
     </div>
     <div class="col-4">

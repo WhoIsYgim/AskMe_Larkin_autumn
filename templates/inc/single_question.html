@@ -37,7 +37,7 @@
     <hr>
     <div class="row">
         <div class="col-6 ">
-            <h6><a class="name_by_question" href="{% url "profile" question.author.id%}"> Question by: {{ question.get_username }}</a></h6>
+            <h6><a class="name_by_question" href="{% url "profile" question.author.user.id%}"> Question by: {{ question.get_username }}</a></h6>
         </div>
         <div class="col-6">
             <h6 class="pub_date">Publication date: {{ question.date }}</h6>

@@ -39,7 +39,7 @@
 
 
                 <div class="answers_count mt-4">
-                    <span>Questions answered by {{ user.user.username }}: {{ user.answers }} </span>
+                    <span>Answers by {{ user.user.username }}: {{ user.answers }} </span>
                 </div>
                 {% if request.user.is_authenticated and user.user.id == request.user.id %}
                 <a class="btn btn-outline-dark mt-4" href="{% url "profile_edit" %}">Edit Profile</a>

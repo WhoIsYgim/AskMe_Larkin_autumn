@@ -45,8 +45,9 @@ body {
 }
 
 .solution {
-    height: 50px;
-    width: 50px;
+    margin-top: 10px;
+    height: 40px;
+    width: 40px;
 }
 
 .solution img {
@@ -236,13 +237,16 @@ form > .form-group {
 }
 
 .profile_avatar {
-    height: 250px;
-    width: 250px;
+    height: 200px;
+    width: 200px;
 }
 
 .profile_avatar img {
+     max-width: 100%;
+    height: 100%;
     width: 100%;
-    object-fit: fill;
+
+    object-fit: cover;
 }
 
 .profile_bio{
@@ -302,4 +306,11 @@ form > .form-group {
 
 .not_found{
     margin-top: 250px;
+    margin-top: 250px;
+}
+
+.to_profile_link{
+    font-size: 30px;
+    text-decoration: none;
+    color: #0c4128;
 }

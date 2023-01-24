@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+
 
 </head>
 <body class="d-flex flex-column h-100">
@@ -45,15 +47,15 @@
                 {% if request.user.is_authenticated %}
                 <div class="authorized">
                     <div class="avatar-auth">
-                        {% if request.user.profile.avatar %}
-                             <img src="{{ request.user.profile.avatar.url }}" alt="">
+                        {% if request.user.profile_related.avatar %}
+                             <img src="{{ request.user.profile_related.avatar.url }}" alt="">
                         {% else %}
                             <img src="{% static '/img/default.png' %}" alt="">
                         {% endif %}
                     </div>
                     <div class="username">
                         <div class="nav-link ">
-                            <a href="{% url "profile" request.user.id %}" style="font-size: 20px"> Username </a>
+                            <a href="{% url "profile" request.user.id %}" style="font-size: 20px"> {{ request.user.username }} </a>
                         </div>
                         <div class="nav-link">
                              <a href="{% url "logout"  %} "> Log out </a>
@@ -90,5 +92,10 @@
         <span class="text-muted">Created by Larkin Egor</span>
     </div>
 </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script  src="{% static "js/csrftoken.js" %}"></script>
+<script  async src="{% static "js/main.js" %}"></script>
 </body>
+
+
 </html>

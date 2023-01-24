@@ -5,7 +5,7 @@
 {% block content %}
     <form action="/ask/" method="post">
         <div class="form-group">
-            <p class="h1">Ask a question! </p>
+            <p class="h1"> Ask a question!</p>
             {% csrf_token %}
             {% bootstrap_form form %}
         </div>

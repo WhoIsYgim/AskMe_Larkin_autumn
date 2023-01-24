@@ -4,29 +4,41 @@
     <div class="row">
         <div class="col-2">
             <div class="avatar">
-               {% if question.get_author.avatar %}
-                    <img src="{{ question.get_author.avatar.url }}" alt="">
+                {% if question.get_author.avatar %}
+                    <img src="{{ MEDIA_URL }}{{ question.get_author.avatar.url }}" alt="">
                 {% else %}
                     <img src="{% static 'img/default.png' %}" alt="">
                 {% endif %}
             </div>
-            <div class="counter">
-                <img src="{% static '/img/heart.svg' %}" alt="">
+
+            <button class="counter like_question" data-id="{{ question.id }}">
+                {% if request.user.is_authenticated %}
+                    <!-- TODO inplement logic if question liked -->
+                    {% if request.user.is_authenticated %}
+                         <img src="{% static '/img/heart.svg' %}" alt="">
+                    {% else %}
+                        <img src="{% static '/img/red-heart.svg' %}" alt="">
+                    {% endif %}
+                {% else %}
+                        <img src="{% static '/img/heart.svg' %}" alt="">
+                {% endif %}
                 <span>{{ question.get_like_count }}</span>
-            </div>
+            </button>
+
         </div>
         <div class="col-10">
             <h3><a class="header-green" href="{% url "single_q" question.id %}">{{ question.title }}</a></h3>
             <p class="question_text">{{ question.text }}</p>
             <div class="row align-items-end question-meta">
                 <div class="col mb-5">
-                    <a href="{% url "single_q" question.id %}#answers_list"> Answers ({{ question.get_answer_count }})</a>
+                    <a href="{% url "single_q" question.id %}#answers_list"> Answers
+                        ({{ question.get_answer_count }})</a>
                 </div>
                 <div class="col mb-5">
                     <span class="header-green tags_title">Tags: </span>
                     <div>
                         {% for tag in question.get_tags %}
-                        <a class="tag_in_question" href="{% url "single_tag" tag.title %}">{{ tag.title }}</a>
+                            <a class="tag_in_question" href="{% url "single_tag" tag.title %}">{{ tag.title }}</a>
                         {% endfor %}
                     </div>
 
@@ -37,7 +49,8 @@
     <hr>
     <div class="row">
         <div class="col-6 ">
-            <h6><a class="name_by_question" href="{% url "profile" question.author.user.id%}"> Question by: {{ question.get_username }}</a></h6>
+            <h6><a class="name_by_question" href="{% url "profile" question.author.user.id %}"> Question
+                by: {{ question.get_username }}</a></h6>
         </div>
         <div class="col-6">
             <h6 class="pub_date">Publication date: {{ question.date }}</h6>

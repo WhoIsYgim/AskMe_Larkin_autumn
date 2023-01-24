@@ -9,10 +9,19 @@
                     <img src="{% static 'img/default.png' %}" alt="">
                 {% endif %}
             </div>
-            <div class="counter">
-                <img src="{% static '/img/heart.svg' %}" alt="">
+            <button class="counter like_question" data-id="{{ question.id }}">
+                {% if request.user.is_authenticated %}
+                    <!-- TODO inplement logic if question liked -->
+                    {% if request.user.is_authenticated %}
+                        <img src="{% static '/img/heart.svg' %}" alt="">
+                    {% else %}
+                        <img src="{% static '/img/red-heart.svg' %}" alt="">
+                    {% endif %}
+                {% else %}
+                    <img src="{% static '/img/heart.svg' %}" alt="">
+                {% endif %}
                 <span>{{ question.get_like_count }}</span>
-            </div>
+            </button>
         </div>
         <div class="col-10">
             <h4 class="qw_pg_title">{{ question.title }}</h4>

@@ -1,15 +1,20 @@
-from django.http import HttpResponseRedirect
+from django.forms import model_to_dict
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import auth
+from django.views.decorators.http import require_POST
+
 from app import models
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 
-from .forms import LoginForm, RegistrationForm, AskForm
+from .forms import LoginForm, RegistrationForm, AskForm, AnswerForm, EditForm
 
 PAGINATION_SIZE = 10
+top_users = models.Profile.objects.all()[:10]
+top_tags = models.Tag.objects.all()[:10]
 
 
 def pagination(objects, request):
@@ -21,8 +26,8 @@ def pagination(objects, request):
 
 def create_content_right():
     content = {
-        "tags": models.Tag.objects.get_hot_tags(),
-        "users": models.Profile.objects.get_top_users(),
+        "tags": top_tags,
+        "users": top_users,
     }
 
     return content
@@ -45,11 +50,27 @@ def recent(request):
 
 
 def question(request, i: int):
+    if request.method == 'GET':
+        form = AnswerForm()
+    elif request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect(reverse('login_page'))
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = models.Answer.objects.create(text=form.cleaned_data['text'],
+                                                  question=models.Question.objects.get(id=i),
+                                                  author=models.Profile.objects.get(user_id=request.user.id))
+            answer.save()
+            if answer:
+                return redirect(reverse("single_q", args=[i]))
+
     content = create_content(models.Answer.objects.get_answers_for_question(i), request)
     try:
         content["question"] = models.Question.objects.get(id=i)
     except Exception:
         return render(request, 'not_found.html', create_content_right())
+
+    content['form'] = form
 
     return render(request, 'question.html', content)
 
@@ -70,16 +91,30 @@ def profile(request, i: int):
     return render(request, 'profile.html', content)
 
 
-@login_required(redirect_field_name="login")
+@login_required(login_url='login_page', redirect_field_name="continue")
 def profile_edit(request):
-    return render(request, 'profile_edit.html', )
+    if request.method == 'GET':
+        initial_data = model_to_dict(request.user)
+        initial_data['avatar'] = request.user.profile_related.avatar
+        initial_data['bio'] = request.user.profile_related.bio
+        form = EditForm(initial=initial_data)
+    elif request.method == 'POST':
+        form = EditForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("profile_edit"))
+
+    content = create_content_right()
+    content['form'] = form
+    return render(request, 'profile_edit.html', content)
 
 
-@login_required(redirect_field_name="login")
+@login_required(login_url='login_page', redirect_field_name="continue")
 def ask(request):
     if request.method == 'POST':
         ask_form = AskForm(request.POST)
         if ask_form.is_valid():
+            # TODO form.save()
             quest = models.Question.objects.create(
                 title=ask_form.cleaned_data['title'],
                 text=ask_form.cleaned_data['text'],
@@ -126,7 +161,7 @@ def logout_view(request):
 
 def register(request):
     if request.method == 'POST':
-        user_form = RegistrationForm(data=request.POST)
+        user_form = RegistrationForm(data=request.POST, files=request.FILES)
         if user_form.is_valid():
             user = user_form.save()
             if user:
@@ -140,3 +175,57 @@ def register(request):
     content = create_content_right()
     content["form"] = user_form
     return render(request, 'register.html', content)
+
+
+@require_POST
+@login_required(login_url='login_page', redirect_field_name="continue")
+def like_question(request):
+    quest_id = request.POST['question_id']
+    quest = models.Question.objects.get(id=quest_id)
+    try:
+        like = models.LikeQ.objects.get(question_id=quest_id, user_id=request.user.profile_related.id)
+    except models.LikeQ.DoesNotExist:
+        like = models.LikeQ.objects.create(question=quest, user=request.user.profile_related)
+        like.save()
+    else:
+        like.delete()
+
+    quest.save()
+    return JsonResponse(
+        {'status': 'ok',
+         'likes_count': quest.get_like_count()})
+
+
+@require_POST
+@login_required(login_url='login_page', redirect_field_name="continue")
+def like_answer(request):
+    answer_id = request.POST['answer_id']
+    answer = models.Answer.objects.get(id=answer_id)
+    try:
+        like = models.LikeA.objects.get(answer_id=answer_id, user_id=request.user.profile_related.id)
+    except models.LikeA.DoesNotExist:
+        like = models.LikeA.objects.create(answer=answer, user=request.user.profile_related)
+        like.save()
+    else:
+        like.delete()
+    answer.save()
+    return JsonResponse(
+        {'status': 'ok',
+         'likes_count': answer.get_like_count()})
+
+
+@require_POST
+@login_required(login_url='login_page', redirect_field_name="continue")
+def correct(request):
+    answer_id = request.POST['answer_id']
+    answer = models.Answer.objects.get(id=answer_id)
+    if answer.question.get_author_id() != request.user.id:
+        JsonResponse(
+            {'status': 'forbidden'})
+        return
+    answer.solution = not answer.is_solution()
+    answer.save()
+    return JsonResponse(
+            {'status': 'ok',
+             'solution': f'{answer.is_solution()}'}
+        )

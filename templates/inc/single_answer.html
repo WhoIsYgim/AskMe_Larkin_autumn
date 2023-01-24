@@ -1,9 +1,5 @@
 {% load static %}
-{% if answer.solution %}
-    <div class="solution">
-        <img src="{% static '/img/solution.png' %}" alt="">
-    </div>
-{% endif %}
+
 
 <div class="answer">
     <div class="row">
@@ -15,10 +11,47 @@
                     <img src="{% static 'img/default.png' %}" alt="">
                 {% endif %}
             </div>
-            <div class="counter">
-                <img src="{% static '/img/heart.svg' %}" alt="">
+            <button class="counter like_answer" data-id="{{ answer.id }}">
+                {% if request.user.is_authenticated %}
+                    <!-- TODO inplement logic if question liked -->
+                    {% if request.user.is_authenticated %}
+                        <img src="{% static '/img/heart.svg' %}" alt="">
+                    {% else %}
+                        <img src="{% static '/img/red-heart.svg' %}" alt="">
+                    {% endif %}
+                {% else %}
+                    <img src="{% static '/img/heart.svg' %}" alt="">
+                {% endif %}
                 <span>{{ answer.get_like_count }}</span>
-            </div>
+            </button>
+            {% if answer.solution %}
+                <div class="solution" id="{{ answer.id }}">
+                    <img src="{% static '/img/solution.png' %}" alt="">
+                </div>
+            {% else %}
+                <div class="solution" id ="{{ answer.id }}" hidden>
+                    <img src="{% static '/img/solution.png' %}" alt="">
+                </div>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+                {% if answer.question.get_author_id == request.user.id %}
+                    <div class="form-check mt-2">
+                        {% if answer.is_solution %}
+                            <input class="form-check-input correct_answer" type="checkbox" data-id="{{ answer.id }} "
+                                   checked>
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Correct!
+                            </label>
+                        {% else %}
+                            <input class="form-check-input correct_answer" type="checkbox" data-id="{{ answer.id }}">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Correct!
+                            </label>
+                        {% endif %}
+
+                    </div>
+                {% endif %}
+            {% endif %}
         </div>
         <div class="col-10">
             <p>{{ answer.text }}</p>
@@ -31,7 +64,7 @@
                 by: {{ answer.get_username }}</a></h6>
         </div>
         <div class="col-6">
-            <h6 class="pub_date">Publication date: {{ question.date }}</h6>
+            <h6 class="pub_date">Publication date: {{ answer.date }}</h6>
         </div>
     </div>
 </div>

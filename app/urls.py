@@ -14,6 +14,9 @@ urlpatterns = [
     path('register/', views.register, name="register"),
     path('tag/<str:title>/', views.tag, name="single_tag"),
     path('profile/<int:i>/', views.profile, name="profile"),
-    path('profile/edit/', views.profile_edit, name="profile_edit")
+    path('profile/edit/', views.profile_edit, name="profile_edit"),
+    path('like/question', views.like_question, name='like_q'),
+    path('like/answer', views.like_answer, name='like_a'),
+    path('answer/correct', views.correct, name='correct')
 ]
 

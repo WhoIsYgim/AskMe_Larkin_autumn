@@ -1,6 +1,8 @@
 {% extends 'inc/base.html' %}
 {% load static %}
+{% load bootstrap5 %}
 {% block content %}
+
     <h2 class="mt-5">Question</h2>
 
     {% include 'inc/question_pg.html' %}
@@ -13,11 +15,14 @@
 
     {% include 'inc/paginator.html' %}
 
-    <div class="form-group green-border-focus mt-5">
-        <label class="mb-2 answer_input_label" for="answer_input_form">Answer the question</label>
-        <textarea class="form-control mb-3" id="answer_input_form" rows="3"></textarea>
-        <button class="btn btn-outline-success mb-5" id="submit_answer_button">Answer</button>
-    </div>
+    <form action="{% url 'single_q' question.id %}" method="post">
+        <div class="form-group green-border-focus mt-5">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button type="submit" class="btn btn-outline-success mb-5" id="submit_answer_button">Answer</button>
+        </div>
+    </form>
+
 
 {% endblock content %}
 
